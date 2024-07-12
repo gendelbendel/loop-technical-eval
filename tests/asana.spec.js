@@ -1,53 +1,17 @@
 const { test, expect } = require("@playwright/test");
+const { loadTestData } = require("../lib/testParser");
 
-const testCases = [
-  {
-    id: 1,
-    name: "Test Case 1",
-    leftNav: "Cross-functional project plan, Project",
-    column: "To do",
-    card_title: "Draft project brief",
-  },
-  {
-    id: 2,
-    name: "Test Case 2",
-    leftNav: "Cross-functional project plan, Project",
-    column: "To do",
-    card_title: "Schedule kickoff meeting",
-  },
-  {
-    id: 3,
-    name: "Test Case 3",
-    leftNav: "Cross-functional project plan, Project",
-    column: "To do",
-    card_title: "Share timeline with teammates",
-  },
-  {
-    id: 4,
-    name: "Test Case 4",
-    leftNav: "Work Requests",
-    column: "New Requests",
-    card_title: "[Example] Laptop setup for new hire",
-  },
-  {
-    id: 5,
-    name: "Test Case 5",
-    leftNav: "Work Requests",
-    column: "In Progress",
-    card_title: "[Example] Password not working",
-  },
-  {
-    id: 6,
-    name: "Test Case 6",
-    leftNav: "Work Requests",
-    column: "Completed",
-    card_title: "[Example] New keycard for Daniela V",
-  },
-];
+const testCases = loadTestData(["name", "leftNav", "column", "card_title"]);
+
+const asana = {
+  url: "https://app.asana.com/-/login",
+  email: process.env.ASANA_USER_EMAIL,
+  password: process.env.ASANA_USER_PASSWORD,
+};
 
 test.describe("Asana Data-Driven Tests", () => {
   testCases.forEach((data) => {
-    test("", async ({ page }) => {
+    test(data.name, async ({ page }) => {
       await test.step("Login to Asana", async () => {
         // Login to Asana
       });
